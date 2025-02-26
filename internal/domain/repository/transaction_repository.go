@@ -58,7 +58,9 @@ func (r *transactionRepository) GetTransactionStatus(request_id string, bill_num
 			payment_description 
 		FROM transactions WHERE bill_number = $1`, bill_number)
 
-	err = row.Scan(&trx.RequestID, &trx.CustomerPAN, &trx.Amount, &trx.TransactionDate, &trx.RRN, &trx.BillNumber, &trx.CustomerName, &trx.MerchantID, &trx.MerchantName, &trx.MerchantCity, &trx.CurrencyCode, &trx.PaymentStatus, &trx.PaymentDescription)
+	err = row.Scan(&trx.RequestID, &trx.CustomerPAN, &trx.Amount, &trx.TransactionDate, &trx.RRN,
+		&trx.BillNumber, &trx.CustomerName, &trx.MerchantID, &trx.MerchantName, &trx.MerchantCity,
+		&trx.CurrencyCode, &trx.PaymentStatus, &trx.PaymentDescription)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
