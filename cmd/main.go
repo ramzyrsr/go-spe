@@ -2,7 +2,7 @@ package main
 
 import (
 	"go-spe/api"
-	"go-spe/pkg/db"
+	"go-spe/pkg/cache"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -16,11 +16,7 @@ func main() {
 		return
 	}
 
-	// Set up the database connection
-	_, err := db.Connect()
-	if err != nil {
-		log.Fatal("Failed to connect to the database: ", err)
-	}
+	cache.InitRedis()
 
 	// Setup API
 	router := gin.Default()
