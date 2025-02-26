@@ -28,9 +28,6 @@ func (r *transactionRepository) GetTransactionStatus(request_id string, bill_num
 
 	// Check Redis cache first
 	status, err := cache.RedisClient.Get(ctx, bill_number).Result()
-	if err != nil {
-		return nil, err
-	}
 	if status != "" {
 		// Unmarshal the status from JSON to struct
 		err = json.Unmarshal([]byte(status), trx)
