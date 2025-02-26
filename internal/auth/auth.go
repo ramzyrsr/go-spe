@@ -17,7 +17,7 @@ import (
 type RequestBody struct {
 	RequestID  string `json:"request_id"`
 	RRN        string `json:"rrn"`
-	BillNumber string `json:"bill number"`
+	BillNumber string `json:"bill_number"`
 	MerchantID string `json:"merchant_id"`
 }
 
