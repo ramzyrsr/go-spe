@@ -6,8 +6,11 @@ import "time"
 type Transaction struct {
 	RequestID          string    `json:"request_id"`
 	CustomerPAN        string    `json:"customer_pan"`
-	Amount             float64   `json:"amount"`
+	Amount             string    `json:"amount"`
 	TransactionDate    time.Time `json:"transaction_date"`
+	RRN                string    `json:"rrn"`
+	BillNumber         string    `json:"bill_number"`
+	CustomerName       string    `json:"customer_name"`
 	MerchantID         string    `json:"merchant_id"`
 	MerchantName       string    `json:"merchant_name"`
 	MerchantCity       string    `json:"merchant_city"`
