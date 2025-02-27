@@ -3,6 +3,7 @@ package main
 import (
 	"go-spe/api"
 	"go-spe/pkg/cache"
+	"go-spe/pkg/messaging"
 	"log"
 	"net/http"
 
@@ -18,9 +19,13 @@ func main() {
 	}
 
 	cache.InitRedis()
+	messaging.InitRabbitMQ()
 
 	// Setup API
 	router := gin.Default()
+
+	// Start ProcessTransactions in a goroutine
+	go messaging.ProcessTransactions()
 
 	// Apply rate limiting middleware globally
 	router.Use(RateLimitMiddleware)
@@ -30,6 +35,8 @@ func main() {
 	// Start server
 	log.Println("Starting server on port 8080...")
 	router.Run(":8080")
+
+	select {} // Blocks forever, keeping the program alive for the goroutine to run
 }
 
 // RateLimitMiddleware checks if the IP address is rate-limited
