@@ -30,9 +30,6 @@ func (h *TransactionHandler) CheckTransactionStatus(c *gin.Context) {
 	}
 
 	transaction, err := h.service.GetTransactionStatus(reqBody.RequestID, reqBody.BillNumber)
-	fmt.Println("RequestID:", reqBody.RequestID)
-	fmt.Println("BillNumber:", reqBody.BillNumber)
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
