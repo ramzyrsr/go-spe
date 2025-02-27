@@ -29,6 +29,7 @@ func SetupRoutes(router *gin.Engine) {
 		v1.GET("/", auth.SignatureMiddleware(), func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "Welcome to API"})
 		})
+		v1.POST("/transaction-notification", auth.SignatureMiddleware(), transactionHandler.TransactionNotification)
 		v1.POST("/check-status", auth.SignatureMiddleware(), transactionHandler.CheckTransactionStatus)
 	}
 }
