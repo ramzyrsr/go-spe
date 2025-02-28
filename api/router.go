@@ -26,7 +26,7 @@ func SetupRoutes(router *gin.Engine) {
 		transactionService := service.NewTransactionService(transactionRepo)
 		transactionHandler := handler.NewTransactionHandler(transactionService)
 
-		v1.GET("/", auth.SignatureMiddleware(), func(c *gin.Context) {
+		v1.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"message": "Welcome to API"})
 		})
 		v1.POST("/transaction-notification", auth.SignatureMiddleware(), transactionHandler.TransactionNotification)
