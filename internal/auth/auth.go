@@ -52,9 +52,19 @@ func SignatureMiddleware() gin.HandlerFunc {
 		// Reset the request body so it can be read again
 		body, _ := json.Marshal(reqBody)
 		c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+
+		// Check the route path to determine the payload
+		var payload string
+		switch c.FullPath() {
+		case "/api/v1/transaction-notification":
+			payload = fmt.Sprintf("%s:%s:%s", reqBody.RequestID, reqBody.RRN, reqBody.MerchantID)
+		case "/api/v1/check-status":
+			payload = fmt.Sprintf("%s", reqBody.BillNumber)
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid route"})
+			c.Abort()
 			return
 		}
-		payload := fmt.Sprintf("%s:%s:%s", reqBody.RequestID, reqBody.RRN, reqBody.MerchantID)
 
 		// Generate expected signature
 		expectedSignature := generateSignature(payload, os.Getenv("SECRET_KEY"))
