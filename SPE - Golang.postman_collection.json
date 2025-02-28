@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "99a2adad-516a-4b72-8092-b370469d9276",
+		"name": "SPE - Golang",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15318484",
+		"_collection_link": "https://martian-spaceship-255671.postman.co/workspace/Mandala~2015a797-6372-4967-8360-7a3b15fd9695/collection/15318484-99a2adad-516a-4b72-8092-b370469d9276?action=share&source=collection_link&creator=15318484"
+	},
+	"item": [
+		{
+			"name": "transaction-notification",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "hvBOwXntUjXfUf9Zjvd8hFttRFpQJ0hUNguVFYsNfheMKaAS9ATiDogdTDVPxr3Kks81M6uEegBtiBVNc7DZeg==",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Signature",
+						"value": "g8Z9pX1rsSUQ1UoLqeU9jEb+LyiE3XozKNUUpPSlCuO+5twtzL6FBqLhcx6I1chwxQhwiof6Y7kIJ1zlNj4Xxg==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"request_id\": \"XwVjF5zfuHhrDZuw7\",\n    \"customer_pan\": \"9360001110000000019\",\n    \"amount\": \"12580.00\",\n    \"transaction_datetime\": \"2021-02-25T13:36:13\",\n    \"rrn\": \"123456789012\",\n    \"bill_number\": \"12345678901234567894\",\n    \"customer_name\": \"John Doe\",\n    \"merchant_id\": \"008800223497\",\n    \"merchant_name\": \"Sukses Makmur Bendungan Hilir\",\n    \"merchant_city\": \" Jakarta Pusat\",\n    \"currency_code\": \"360\",\n    \"payment_status\": \"00\",\n    \"payment_description\": \"Payment Success\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transaction-notification",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transaction-notification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check-status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "hvBOwXntUjXfUf9Zjvd8hFttRFpQJ0hUNguVFYsNfheMKaAS9ATiDogdTDVPxr3Kks81M6uEegBtiBVNc7DZeg==",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Signature",
+						"value": "I7I/t5H2US06ugdqbOh1wasyvKSofl1EU66fZ0MKhnL6r73VywyQIYpHqYunFJwCXW7ipNlDFD3x7ST3rU2fiA==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"request_id\": \"XwVjF5zfuHhrDZuw7\",\n    \"bill_number\": \"12345678901234567894\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/check-status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"check-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
