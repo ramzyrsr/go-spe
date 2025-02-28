@@ -1,11 +1,13 @@
 package auth
 
 import (
+	"bytes"
 	"crypto/hmac"
 	"crypto/sha512"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"go-spe/internal/domain/models"
 	"io"
 	"net/http"
 	"os"
@@ -13,13 +15,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
-
-type RequestBody struct {
-	RequestID  string `json:"request_id"`
-	RRN        string `json:"rrn"`
-	BillNumber string `json:"bill_number"`
-	MerchantID string `json:"merchant_id"`
-}
 
 // Generate HMAC SHA512 and encode in base64
 func generateSignature(payload string, key string) string {
@@ -48,16 +43,15 @@ func SignatureMiddleware() gin.HandlerFunc {
 		}
 
 		// Prepare the payload value
-		body, err := io.ReadAll(c.Request.Body)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to read body"})
+		var reqBody *models.Transaction
+		if err := c.ShouldBindJSON(&reqBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		var reqBody RequestBody
-		err = json.Unmarshal(body, &reqBody)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to parse JSON"})
+		// Reset the request body so it can be read again
+		body, _ := json.Marshal(reqBody)
+		c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 			return
 		}
 		payload := fmt.Sprintf("%s:%s:%s", reqBody.RequestID, reqBody.RRN, reqBody.MerchantID)
