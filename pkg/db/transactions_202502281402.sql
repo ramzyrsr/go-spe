@@ -1,0 +1,6 @@
+INSERT INTO public.transactions (request_id,customer_pan,amount,transaction_datetime,rrn,bill_number,customer_name,merchant_id,merchant_name,merchant_city,currency_code,payment_status,payment_description) VALUES
+	 ('XwVjF5zfuHhrDZuw','9360001110000000019',10000.00,'2021-02-25 13:36:13','123456789012','12345678901234567890','John Doe','008800223497','Sukses Makmur Bendungan Hilir','Jakarta Pusat','360','00','Payment Success'),
+	 ('XwVjF5zfuHhrDZuw4','9360001110000000019',0.00,'2025-02-27 07:51:43.604898','123456789012','12345678901234567891','John Doe','008800223497','Sukses Makmur Bendungan Hilir',' Jakarta Pusat','360','00','Payment Success'),
+	 ('XwVjF5zfuHhrDZuw5','9360001110000000019',2300.00,'2025-02-27 00:57:16.838925','123456789012','12345678901234567892','John Doe','008800223497','Sukses Makmur Bendungan Hilir','Jakarta Pusat','360','00','Payment Success'),
+	 ('XwVjF5zfuHhrDZuw6','9360001110000000019',0.00,'2025-02-27 08:03:37.174282','123456789012','12345678901234567893','John Doe','008800223497','Sukses Makmur Bendungan Hilir',' Jakarta Pusat','360','00','Payment Success'),
+	 ('XwVjF5zfuHhrDZuw7','9360001110000000019',12580.00,'2025-02-27 08:08:49.353701','123456789012','12345678901234567894','John Doe','008800223497','Sukses Makmur Bendungan Hilir',' Jakarta Pusat','360','00','Payment Success');
