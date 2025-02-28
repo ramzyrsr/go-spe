@@ -2,11 +2,14 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
+	"go-spe/internal/domain/models"
 	"go-spe/internal/domain/service"
+	"go-spe/pkg/messaging"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rabbitmq/amqp091-go"
 )
 
 type TransactionHandler struct {
@@ -15,6 +18,28 @@ type TransactionHandler struct {
 
 func NewTransactionHandler(service *service.TransactionService) *TransactionHandler {
 	return &TransactionHandler{service: service}
+}
+
+func (h *TransactionHandler) TransactionNotification(c *gin.Context) {
+	var trx *models.Transaction
+	if err := c.ShouldBindJSON(&trx); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request format"})
+		return
+	}
+
+	// Publish to RabbitMQ
+	body, _ := json.Marshal(trx)
+	err := messaging.Channel.Publish(
+		"", "transaction_notifications", false, false,
+		amqp091.Publishing{ContentType: "application/json", Body: body},
+	)
+	if err != nil {
+		log.Println("Failed to publish to RabbitMQ:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to queue transaction"})
+		return
+	}
+
+	c.JSON(http.StatusAccepted, gin.H{"code": "00", "message": "success"})
 }
 
 func (h *TransactionHandler) CheckTransactionStatus(c *gin.Context) {
